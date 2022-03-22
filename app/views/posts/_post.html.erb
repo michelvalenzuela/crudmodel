@@ -1,0 +1,47 @@
+<div class="col-3 card" id="post_<%= post.id %>" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title"><%= post.title %></h5>
+    <h6 class="card-subtitle mb-2 text-muted"><%= post.created_at %></h6>
+    <p class="card-text"><%= post.content %></p>
+    
+    <%= link_to "Ver", post, :class => "btn btn-dark text-white btn-sm", remote: true %>
+
+    <button type="button" class="btn btn-info text-white btn-sm" data-toggle="modal" data-target="#modalEditPost_<%= post.id %>">Editar</button>
+
+    <%= link_to "Eliminar", post, method: :delete, :class => "float-right btn btn-danger text-white btn-sm", data: { confirm: "Esta Seguro"}, remote: true %>
+  </div>
+</div>
+
+<!--Inicio Modal Editar-->
+<%= form_with(model: post, remote: true) do |form| %>
+  <div class="modal fade" id="modalEditPost_<%= post.id %>" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h2 class="modal-title text-white">Editar Post</h2>
+            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+           <div class="form-group">
+              <%= form.label :title %>
+              <%= form.text_field :title, :class => "form-control" %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label :content %>
+              <%= form.text_area :content, :class => "form-control" %>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="form-group">
+              <%= form.submit "Actualizar", :class => "btn btn-primary" %>
+            </div>
+        </div>
+      </div>
+    </div>  
+  </div>
+
+<% end %>
+<!-- Fin Modal Editar -->

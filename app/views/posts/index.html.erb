@@ -1,0 +1,90 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Posts con Ajax</h1>
+<!--init new-->
+<h2>Listado por AJAX</h2>
+<div class="container d-inline ">
+  <!-- init Buscador-->
+  <div class="float-left">
+    <%= form_tag(posts_path, method: "get", remote: true, :class => "form-inline") do  %>
+      <%= text_field_tag :search, params[:search], placeholder:"Buscar un Post", :class =>"form-control" %>
+      <%= submit_tag "Buscar", class:"btn btn-primary"%>
+    <% end %>
+  </div>
+  <!-- end Buscador-->
+  <button type="button" class="float-right btn btn-dark" data-toggle="modal" data-target="#modalNewPost">Agregar Post</button>
+</div>
+
+<!-- Modal Crear -->
+<%= form_with(model: @post, remote: true) do |form| %>
+  <div class="modal fade" id="modalNewPost" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h2 class="modal-title text-white">New Post</h2>
+            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+           <div class="form-group">
+              <%= form.label :title %>
+              <%= form.text_field :title, :class => "form-control" %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label :content %>
+              <%= form.text_area :content, :class => "form-control" %>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="form-group">
+              <%= form.submit "Guardar", :class => "btn btn-primary" %>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>
+<!-- Modal Crear -->
+
+<!--end new-->
+
+
+
+<div class="container mt-5">
+  <div class="row" id="container_posts">
+    <%= render @posts %>
+  </div>
+</div>
+<br>
+
+<!-- Inicio Modal Show -->
+<div class="modal fade" id="modalShowPost" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h2 class="modal-title text-white">Ver Post</h2>
+            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+           <div class="form-group">
+              <h3 id="modal_post_title"></h3>
+            </div>
+
+            <div class="form-group">
+              <i id="modal_post_content"></i>
+            </div>
+        </div>
+        <div class="modal-body">
+           <div class="form-group">
+              <i id="modal_post_created_at" class="float-right"></i>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- Fin Modal Show -->
